@@ -7,6 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import yte.intern.sms.common.response.ResponseType;
+import yte.intern.sms.common.response.SecurityRecord;
 import yte.intern.sms.login.controller.LoginRequest;
 
 @Service
@@ -14,8 +16,8 @@ import yte.intern.sms.login.controller.LoginRequest;
 public class LoginService {
 
     private final AuthenticationManager authenticationManager;
-
-    public String login(LoginRequest loginRequest) {
+    private String authority = "";
+    public SecurityRecord login(LoginRequest loginRequest) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password());
 
         Authentication authenticatedAuthentication = authenticationManager.authenticate(token);
@@ -24,6 +26,7 @@ public class LoginService {
         newContext.setAuthentication(authenticatedAuthentication);
         SecurityContextHolder.setContext(newContext);
 
-        return "Authentication is successful";
+        authority = newContext.getAuthentication().getAuthorities().stream().toList().get(0).getAuthority();
+        return new SecurityRecord(ResponseType.SUCCESS, "Login is successful",authority);
     }
 }

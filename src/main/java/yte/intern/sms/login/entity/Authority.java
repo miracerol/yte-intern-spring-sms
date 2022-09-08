@@ -22,7 +22,7 @@ public class Authority implements GrantedAuthority {
     private String authority;
 
     @ManyToMany(mappedBy = "authorities")
-    private List<CustomUser> users;
+    private List<Users> users;
 
     public Authority(String authority) {
         this.authority = authority;
