@@ -33,17 +33,8 @@ public class StudentController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse addStudent(@Valid @RequestBody AddStudentRequest addStudentRequest) {
-        Users a = new Users();
-        Authority student = authorityRepository.findByAuthority("STUDENT")
-                .orElseThrow(() -> new EntityNotFoundException("Authority:STUDENT not found!"));
-        a.setPassword(passwordEncoder.encode(addStudentRequest.password()));
 
-        a.setUsername(addStudentRequest.username());
-
-        a.setAuthorities(List.of(student));
-
-        userRepository.save(a);
-        return studentService.addStudent(addStudentRequest.toDomainEntity());
+        return studentService.addStudent(addStudentRequest.toDomainEntity(passwordEncoder,createUsername()));
     }
 
     @GetMapping
@@ -72,5 +63,17 @@ public class StudentController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse updateStudent(@Valid @RequestBody UpdateStudentRequest request, @PathVariable Long id) {
         return studentService.updateStudent(id, request.toDomainEntity());
+    }
+    private String createUsername(){
+        String username="";
+        while (true){
+            int randomWithMathRandom = (int) ((Math.random() * (99999 - 10000)) + 10000);
+            if (userRepository.findByUsername(randomWithMathRandom+"").isEmpty()){
+                username =randomWithMathRandom+"";
+                break;
+            }
+        }
+        return username;
+
     }
 }

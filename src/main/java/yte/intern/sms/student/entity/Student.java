@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import yte.intern.sms.login.entity.Authority;
 import yte.intern.sms.login.entity.Users;
+import yte.intern.sms.login.repository.UserRepository;
 
 
 import javax.persistence.*;
@@ -19,9 +20,9 @@ import java.util.List;
 @DiscriminatorValue("1")
 public class Student extends Users {
 
+    public Student( String username, String password, String email, String name, String lastName) {
 
-    public Student(String username, String password, String email, String name, String lastName) {
-        super(username, password, email, name, lastName, List.of(new Authority("STUDENT")));
+        super( username,password, email, name, lastName, List.of(new Authority("STUDENT")));
     }
 
     public Student() {

@@ -1,5 +1,6 @@
 package yte.intern.sms.student.controller.requests;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import yte.intern.sms.student.entity.Student;
 
 import javax.validation.constraints.Email;
@@ -17,14 +18,14 @@ public record AddStudentRequest(
         String email,
 
 
-        String username,
 
 
         String password
 
 ) {
-    public Student toDomainEntity() {
-        return new Student(username,password,email, name, lastname);
+    public Student toDomainEntity(PasswordEncoder passwordEncoder, String username) {
+
+        return new Student(username,passwordEncoder.encode(password),email, name, lastname);
     }
 
 }

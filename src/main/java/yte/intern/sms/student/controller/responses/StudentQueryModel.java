@@ -5,10 +5,9 @@ import yte.intern.sms.student.entity.Student;
 public record StudentQueryModel(
         Long id,
         String name,
-        String surname,
+        String lastname,
         String email,
-        String username,
-        String password
+        String username
 
 ) {
 
@@ -18,9 +17,9 @@ public record StudentQueryModel(
                 student.getName(),
                 student.getLastName(),
                 student.getEmail(),
-                student.getUsername(),
-                student.getPassword()
+                student.getUsername()
 
         );
     }
+
 }
