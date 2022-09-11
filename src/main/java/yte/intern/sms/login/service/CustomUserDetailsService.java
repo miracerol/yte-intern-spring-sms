@@ -25,9 +25,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @PostConstruct
     public void init() {
-        userRepository.save(new Users("user", passwordEncoder.encode("user"),"user@gmail.com","nameuser","lastuser", List.of(new Authority("USER"))));
-        studentService.addStudent(new Student("student",passwordEncoder.encode("student"),"student@gmail.com","student","studentlast"));
-        userRepository.save(new Users("admin", passwordEncoder.encode("admin"),"admin@gmail.com","nameadmin","lastadmin", List.of(new Authority("ADMIN"))));
+        //userRepository.save(new Users("user", passwordEncoder.encode("user"),"user@gmail.com","nameuser","lastuser", List.of(new Authority("USER"))));
+        //studentService.addStudent(new Student("student",passwordEncoder.encode("student"),"student@gmail.com","student","studentlast"));
+        //userRepository.save(new Users("admin", passwordEncoder.encode("admin"),"admin@gmail.com","nameadmin","lastadmin", List.of(new Authority("ADMIN"))));
     }
 
     @Override

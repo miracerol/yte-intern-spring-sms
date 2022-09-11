@@ -11,6 +11,7 @@ import yte.intern.sms.login.entity.Users;
 import yte.intern.sms.login.repository.AuthorityRepository;
 import yte.intern.sms.login.repository.UserRepository;
 import yte.intern.sms.student.controller.requests.AddStudentRequest;
+import yte.intern.sms.student.controller.requests.UpdatePasswordRequest;
 import yte.intern.sms.student.controller.requests.UpdateStudentRequest;
 import yte.intern.sms.student.controller.responses.StudentQueryModel;
 import yte.intern.sms.student.service.StudentService;
@@ -63,6 +64,12 @@ public class StudentController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse updateStudent(@Valid @RequestBody UpdateStudentRequest request, @PathVariable Long id) {
         return studentService.updateStudent(id, request.toDomainEntity());
+    }
+    //update password
+    @PutMapping("/updatePassword/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public MessageResponse updatePassword(@PathVariable Long id, @RequestBody UpdatePasswordRequest passwordRequest) {
+        return studentService.updatePassword(id, passwordEncoder.encode(passwordRequest.getPassword()));
     }
     private String createUsername(){
         String username="";

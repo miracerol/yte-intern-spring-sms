@@ -17,9 +17,6 @@ public record AddStudentRequest(
         @Email
         String email,
 
-
-
-
         String password
 
 ) {

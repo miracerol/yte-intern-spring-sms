@@ -37,7 +37,7 @@ public class StudentService {
 
     public MessageResponse deleteStudentById(Long id) {
         studentRepository.deleteById(id);
-        return new MessageResponse(ResponseType.SUCCESS, "Student has been delete successfully");
+        return new MessageResponse(ResponseType.SUCCESS, "Student has been deleted successfully");
 
     }
     public MessageResponse updateStudent(Long id, Student updatedStudent) {
@@ -49,6 +49,15 @@ public class StudentService {
         studentRepository.save(student);
 
         return new MessageResponse(ResponseType.SUCCESS, "Student has been updated successfully");
+    }
+    //update password
+    public MessageResponse updatePassword(Long id, String password) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+
+        student.setPassword(password);
+        studentRepository.save(student);
+        return new MessageResponse(ResponseType.SUCCESS, "Password has been updated successfully");
     }
 }
 
