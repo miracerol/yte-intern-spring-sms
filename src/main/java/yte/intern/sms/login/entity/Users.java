@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import yte.intern.sms.common.entity.BaseEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
@@ -20,19 +21,23 @@ import java.util.List;
         discriminatorType = DiscriminatorType.INTEGER)
 public class Users extends BaseEntity implements UserDetails {
 
-
+    @NotBlank
     private String username;
+    @NotBlank
     private String password;
+    @NotBlank
     private String email;
+    @NotBlank
     private String name;
+    @NotBlank
     private String lastName;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private List<Authority> authorities;
 
-    public void updateUser(String username, String email, String name, String lastName) {
-        this.username = username;
+    public void updateUser(String email, String name, String lastName) {
+
         this.email = email;
         this.name = name;
         this.lastName = lastName;

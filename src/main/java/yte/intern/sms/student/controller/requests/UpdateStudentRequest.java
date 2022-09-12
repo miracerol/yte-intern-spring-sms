@@ -4,15 +4,13 @@ import yte.intern.sms.student.entity.Student;
 
 public record UpdateStudentRequest(
         String name,
-        String surname,
-        String email,
-        String username,
+        String lastname,
+        String email
 
-        String password
 ) {
 
     public Student toDomainEntity() {
-        return new Student(name, surname, email, username, password);
+        return new Student("null","null",email, name, lastname);
     }
 
 }

@@ -28,8 +28,10 @@ public class Student extends Users {
     public Student() {
     }
 
+
+
     public void update(Student updatedStudent) {
-        super.updateUser(updatedStudent.getUsername(), updatedStudent.getEmail(), updatedStudent.getName(), updatedStudent.getLastName());
+        super.updateUser(updatedStudent.getEmail(), updatedStudent.getName(), updatedStudent.getLastName());
 
     }
 
