@@ -6,8 +6,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yte.intern.sms.common.response.MessageResponse;
-import yte.intern.sms.login.entity.Authority;
-import yte.intern.sms.login.entity.Users;
 import yte.intern.sms.login.repository.AuthorityRepository;
 import yte.intern.sms.login.repository.UserRepository;
 import yte.intern.sms.student.controller.requests.AddStudentRequest;
@@ -16,7 +14,6 @@ import yte.intern.sms.student.controller.requests.UpdateStudentRequest;
 import yte.intern.sms.student.controller.responses.StudentQueryModel;
 import yte.intern.sms.student.service.StudentService;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -39,7 +36,7 @@ public class StudentController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT')")
     public List<StudentQueryModel> getAllStudents() {
         return studentService.getAllStudents()
                 .stream()
@@ -49,7 +46,7 @@ public class StudentController {
 
 
     @GetMapping("/{id}")
-
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT')")
     public StudentQueryModel getById(@NotNull @PathVariable Long id) {
         return new StudentQueryModel(studentService.getById(id));
     }
