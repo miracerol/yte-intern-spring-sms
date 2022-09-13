@@ -24,7 +24,7 @@ public class Lesson extends BaseEntity {
     private Integer day;
     private Integer timeSlot;
 
-    public Lesson(String lessonName, String description, String type, String code, Integer day, Integer timeSlot, Long ClassroomId, Long academicianId) {
+    public Lesson(String lessonName, String description, String type, String code, Integer day, Integer timeSlot, Long classroomId, Long academicianId) {
         this.lessonName = lessonName;
         this.description = description;
         this.type = type;
@@ -37,7 +37,7 @@ public class Lesson extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id")
-    private Classroom room;
+    private Classroom classroom;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -51,4 +51,14 @@ public class Lesson extends BaseEntity {
     private List<Assistant> assistants;
 
 
+    public void update(Lesson updatedLesson) {
+        this.lessonName = updatedLesson.lessonName;
+        this.description = updatedLesson.description;
+        this.type = updatedLesson.type;
+        this.code = updatedLesson.code;
+        this.day = updatedLesson.day;
+        this.timeSlot = updatedLesson.timeSlot;
+        this.classroom = updatedLesson.classroom;
+        this.instructor = updatedLesson.instructor;
+    }
 }
