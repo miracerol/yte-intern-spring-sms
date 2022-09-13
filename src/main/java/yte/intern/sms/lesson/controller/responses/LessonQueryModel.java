@@ -7,10 +7,11 @@ public record LessonQueryModel(
         String description,
         String type,
         String code,
-        Integer day,
-        Integer timeSlot,
-        Long classroomId,
-        Long academicianId
+        String day,
+        String startTime,
+        String endTime,
+        String classroomName,
+        String academicianName
 
 ) {
 
@@ -20,11 +21,12 @@ public record LessonQueryModel(
                 lesson.getDescription(),
                 lesson.getType(),
                 lesson.getCode(),
-                lesson.getDay(),
-                lesson.getTimeSlot(),
-                lesson.getClassroom().getId(),
-                lesson.getInstructor().getId()
+                lesson.dayConverter(),
+                lesson.startTimeSlotConverter(),
+                lesson.endTimeSlotConverter(),
+                lesson.getClassroom().getClassroomName(),
+                lesson.getInstructor().getName() + " " + lesson.getInstructor().getLastName()
         );
     }
 
-}
+    }

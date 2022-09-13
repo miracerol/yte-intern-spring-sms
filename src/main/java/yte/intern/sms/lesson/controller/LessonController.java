@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import yte.intern.sms.academician.service.AcademicianService;
+import yte.intern.sms.classroom.service.ClassroomService;
 import yte.intern.sms.common.response.MessageResponse;
 import yte.intern.sms.lesson.controller.requests.AddLessonRequest;
 import yte.intern.sms.lesson.controller.responses.LessonQueryModel;
@@ -19,16 +21,17 @@ import java.util.List;
 @Validated
 public class LessonController {
     private final LessonService lessonService;
+    private final ClassroomService classroomService;
+    private final AcademicianService academicianService;
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse addLesson(@Valid @RequestBody AddLessonRequest addLessonRequest) {
-
-        return lessonService.addLesson(addLessonRequest.toDomainEntity());
+        return lessonService.addLesson(addLessonRequest.toDomainEntity(classroomService, academicianService));
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
     public List<LessonQueryModel> getAllStudents() {
         return lessonService.getAllLessons()
                 .stream()
@@ -38,7 +41,7 @@ public class LessonController {
 
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
     public LessonQueryModel getById(@NotNull @PathVariable Long id) {
         return new LessonQueryModel(lessonService.getById(id));
     }
@@ -52,7 +55,7 @@ public class LessonController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse updateLesson(@Valid @RequestBody AddLessonRequest request, @PathVariable Long id) {
-        return lessonService.updateLesson(id, request.toDomainEntity());
+        return lessonService.updateLesson(id, request.toDomainEntity(classroomService,academicianService));
     }
 
 }

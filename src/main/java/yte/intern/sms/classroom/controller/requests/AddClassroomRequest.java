@@ -12,7 +12,7 @@ public record AddClassroomRequest(
         @NotBlank
         @Size(max = 25)
         String classroomName,
-        @NotBlank
+
         Integer capacity,
 
         boolean hasProjector,
