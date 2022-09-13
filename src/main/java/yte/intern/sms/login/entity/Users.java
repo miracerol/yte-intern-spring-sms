@@ -41,6 +41,15 @@ public class Users extends BaseEntity implements UserDetails {
         this.email = email;
         this.name = name;
         this.lastName = lastName;
+
+    }
+    public void updateUser(String email, String name, String lastName, String username) {
+
+        this.email = email;
+        this.name = name;
+        this.lastName = lastName;
+        this.username = username;
+
     }
 
     @Override

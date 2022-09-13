@@ -26,7 +26,7 @@ public class Assistant extends Users {
 
 
     public void update(Assistant updatedAssistant) {
-        super.updateUser(updatedAssistant.getEmail(), updatedAssistant.getName(), updatedAssistant.getLastName());
+        super.updateUser(updatedAssistant.getEmail(), updatedAssistant.getName(), updatedAssistant.getLastName(), updatedAssistant.getUsername());
 
     }
 

@@ -10,7 +10,7 @@ public record UpdateAssistantRequest(
 ) {
 
     public Assistant toDomainEntity() {
-        return new Assistant("null","null",email, name, lastname);
+        return new Assistant(name.toLowerCase()+"."+lastname.toLowerCase(),"null",email, name, lastname);
     }
 
 }

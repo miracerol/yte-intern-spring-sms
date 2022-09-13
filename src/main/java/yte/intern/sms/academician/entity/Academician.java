@@ -26,7 +26,7 @@ public class Academician extends Users {
 
 
     public void update(Academician updatedAcademician) {
-        super.updateUser(updatedAcademician.getEmail(), updatedAcademician.getName(), updatedAcademician.getLastName());
+        super.updateUser(updatedAcademician.getEmail(), updatedAcademician.getName(), updatedAcademician.getLastName(), updatedAcademician.getUsername());
 
     }
 

@@ -10,7 +10,7 @@ public record UpdateAcademicianRequest(
 ) {
 
     public Academician toDomainEntity() {
-        return new Academician("null","null",email, name, lastname);
+        return new Academician(name.toLowerCase()+"."+lastname.toLowerCase(),"null",email, name, lastname);
     }
 
 }
