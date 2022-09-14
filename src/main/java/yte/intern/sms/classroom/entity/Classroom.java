@@ -21,6 +21,7 @@ public class Classroom extends BaseEntity {
     private boolean hasAirConditioner;
     private boolean hasWindow;
 
+
     public void update(Classroom updatedClassroom) {
         this.classroomName = updatedClassroom.classroomName;
         this.capacity = updatedClassroom.capacity;

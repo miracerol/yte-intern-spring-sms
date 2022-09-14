@@ -13,5 +13,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Override
     List<Lesson> findAll();
 
+    List<Lesson> findAllByClassroomId(Long classroomId);
+
 
 }

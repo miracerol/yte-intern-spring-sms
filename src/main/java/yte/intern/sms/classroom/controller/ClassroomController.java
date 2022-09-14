@@ -33,7 +33,7 @@ public class ClassroomController {
     public List<ClassroomQueryModel> getAllStudents() {
         return classroomService.getAllClassrooms()
                 .stream()
-                .map(classroom -> new ClassroomQueryModel(classroom))
+                .map(classroom -> new ClassroomQueryModel(classroom, classroomService.getLessonsByClassroomId(classroom.getId())))
                 .toList();
     }
 
@@ -41,7 +41,7 @@ public class ClassroomController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT')")
     public ClassroomQueryModel getById(@NotNull @PathVariable Long id) {
-        return new ClassroomQueryModel(classroomService.getById(id));
+        return new ClassroomQueryModel(classroomService.getById(id),classroomService.getLessonsByClassroomId(id));
     }
 
     @DeleteMapping("/{id}")
@@ -55,5 +55,7 @@ public class ClassroomController {
     public MessageResponse updateClassroom(@Valid @RequestBody AddClassroomRequest request, @PathVariable Long id) {
         return classroomService.updateClassroom(id, request.toDomainEntity());
     }
+
+
 
 }

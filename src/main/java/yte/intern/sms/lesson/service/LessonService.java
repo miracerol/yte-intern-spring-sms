@@ -50,6 +50,9 @@ public class LessonService {
 
         return new MessageResponse(ResponseType.SUCCESS, "Lesson has been updated successfully");
     }
+    public List<Lesson> findAllByClassroomId(Long id) {
+        return lessonRepository.findAllByClassroomId(id);
+    }
 
 }
 

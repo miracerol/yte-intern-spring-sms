@@ -8,6 +8,8 @@ import yte.intern.sms.lesson.entity.Lesson;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collections;
+import java.util.List;
 
 public record AddLessonRequest(
 
@@ -18,9 +20,7 @@ public record AddLessonRequest(
         String description,
         String type,
         String code,
-        Integer day,
-        Integer timeSlot,
-        Integer duration,
+        List<String> schedule,
         Long classroomId,
         Long academicianId
 
@@ -28,7 +28,8 @@ public record AddLessonRequest(
     public Lesson toDomainEntity(ClassroomService classroomService, AcademicianService academicianService) {
         Classroom classroom = classroomService.getById(classroomId);
         Academician academician = academicianService.getById(academicianId);
-        return new Lesson(lessonName, description, type, code, day, timeSlot,duration, classroom, academician);
+        Collections.sort(schedule);
+        return new Lesson(lessonName, description, type, code, schedule, classroom, academician);
     }
 
 }

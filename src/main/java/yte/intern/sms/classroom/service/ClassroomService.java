@@ -6,8 +6,11 @@ import yte.intern.sms.classroom.entity.Classroom;
 import yte.intern.sms.classroom.repository.ClassroomRepository;
 import yte.intern.sms.common.response.MessageResponse;
 import yte.intern.sms.common.response.ResponseType;
+import yte.intern.sms.lesson.entity.Lesson;
+import yte.intern.sms.lesson.service.LessonService;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,6 +18,7 @@ import java.util.List;
 public class ClassroomService {
 
     private final ClassroomRepository classroomRepository;
+    private final LessonService lessonService;
 
 
 
@@ -49,6 +53,15 @@ public class ClassroomService {
         classroomRepository.save(classroom);
 
         return new MessageResponse(ResponseType.SUCCESS, "Classroom has been updated successfully");
+    }
+
+    public List<String> getLessonsByClassroomId(Long id) {
+        List<Lesson> lessons =lessonService.findAllByClassroomId(id);
+        List<String> slots= new ArrayList<>();
+        for (Lesson lesson:lessons) {
+            slots.addAll(lesson.getSchedule());
+        }
+        return slots;
     }
 
 }
