@@ -13,7 +13,9 @@ public record LessonQueryModel(
         List<String> schedule,
         List<String> slots,
         String classroomName,
-        String academicianName
+        long classroomId,
+        String academicianName,
+        long academicianId
 
 ) {
 
@@ -27,7 +29,9 @@ public record LessonQueryModel(
                 lesson.getScheduleText(),
                 lesson.getSchedule(),
                 lesson.getClassroom().getClassroomName(),
-                lesson.getInstructor().getName() + " " + lesson.getInstructor().getLastName()
+                lesson.getClassroom().getId(),
+                lesson.getInstructor().getName() + " " + lesson.getInstructor().getLastName(),
+                lesson.getInstructor().getId()
         );
     }
 
