@@ -10,4 +10,9 @@ public interface AcademicianRepository  extends JpaRepository<Academician, Long>
     Optional<Academician> findAcademicianById(Long id);
 
     List<Academician> findAll();
+
+
+
+
+
 }

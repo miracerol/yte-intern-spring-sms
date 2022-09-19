@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import yte.intern.sms.common.response.MessageResponse;
 import yte.intern.sms.common.response.ResponseType;
+import yte.intern.sms.lesson.entity.Lesson;
+import yte.intern.sms.lesson.service.LessonService;
 import yte.intern.sms.student.entity.Student;
 import yte.intern.sms.student.repository.StudentRepository;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final LessonService lessonService;
 
 
 
@@ -50,7 +53,6 @@ public class StudentService {
 
         return new MessageResponse(ResponseType.SUCCESS, "Student has been updated successfully");
     }
-    //update password
     public MessageResponse updatePassword(Long id, String password) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
@@ -58,6 +60,24 @@ public class StudentService {
         student.setPassword(password);
         studentRepository.save(student);
         return new MessageResponse(ResponseType.SUCCESS, "Password has been updated successfully");
+    }
+
+    public MessageResponse addLesson(Long id, Long lessonId) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+        Lesson lesson = lessonService.getById(lessonId);
+        student.addLesson(lesson);
+        studentRepository.save(student);
+        return new MessageResponse(ResponseType.SUCCESS, "Lesson has been added successfully");
+    }
+
+    public MessageResponse deleteLesson(Long id, Long lessonId) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+        Lesson lesson = lessonService.getById(lessonId);
+        student.deleteLesson(lesson);
+        studentRepository.save(student);
+        return new MessageResponse(ResponseType.SUCCESS, "Lesson has been deleted successfully");
     }
 }
 

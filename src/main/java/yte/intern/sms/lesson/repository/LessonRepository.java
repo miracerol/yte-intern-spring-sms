@@ -1,6 +1,7 @@
 package yte.intern.sms.lesson.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import yte.intern.sms.academician.entity.Academician;
 import yte.intern.sms.lesson.entity.Lesson;
 
 import java.util.List;
@@ -14,6 +15,10 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     List<Lesson> findAll();
 
     List<Lesson> findAllByClassroomId(Long classroomId);
+
+    List<Lesson> findAllByInstructor(Academician instructor);
+
+
 
 
 }

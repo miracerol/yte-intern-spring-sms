@@ -6,6 +6,7 @@ import yte.intern.sms.academician.entity.Academician;
 import yte.intern.sms.academician.repository.AcademicianRepository;
 import yte.intern.sms.common.response.MessageResponse;
 import yte.intern.sms.common.response.ResponseType;
+import yte.intern.sms.lesson.repository.LessonRepository;
 
 
 import javax.persistence.EntityNotFoundException;
@@ -59,5 +60,6 @@ public class AcademicianService {
         academicianRepository.save(academician);
         return new MessageResponse(ResponseType.SUCCESS, "Password has been updated successfully");
     }
+
 }
 

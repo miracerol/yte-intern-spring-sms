@@ -20,4 +20,5 @@ public interface ClassroomRepository extends JpaRepository<Classroom, Long> {
 
 
 
+
 }

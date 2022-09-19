@@ -68,6 +68,18 @@ public class StudentController {
     public MessageResponse updatePassword(@PathVariable Long id, @RequestBody UpdatePasswordRequest passwordRequest) {
         return studentService.updatePassword(id, passwordEncoder.encode(passwordRequest.getPassword()));
     }
+
+    @PostMapping("/add-lesson/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    public MessageResponse addLesson(@PathVariable Long id, @RequestBody Long lessonId) {
+        return studentService.addLesson(id, lessonId);
+    }
+    @PostMapping("/delete-lesson/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    public MessageResponse deleteLesson(@PathVariable Long id, @RequestBody Long lessonId) {
+        return studentService.deleteLesson(id, lessonId);
+    }
+
     private String createUsername(){
         String username="";
         while (true){

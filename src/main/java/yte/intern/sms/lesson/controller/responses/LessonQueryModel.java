@@ -18,7 +18,6 @@ public record LessonQueryModel(
         long academicianId
 
 ) {
-
     public LessonQueryModel(Lesson lesson) {
         this(
                 lesson.getId(),
@@ -28,10 +27,10 @@ public record LessonQueryModel(
                 lesson.getCode(),
                 lesson.getScheduleText(),
                 lesson.getSchedule(),
-                lesson.getClassroom().getClassroomName(),
-                lesson.getClassroom().getId(),
-                lesson.getInstructor().getName() + " " + lesson.getInstructor().getLastName(),
-                lesson.getInstructor().getId()
+                lesson.getClassroom() != null ? lesson.getClassroom().getClassroomName() : "No Classroom",
+                lesson.getClassroom() != null ? lesson.getClassroom().getId() : 0,
+                lesson.getInstructor() != null ? (lesson.getInstructor().getName() + " " + lesson.getInstructor().getLastName()) : "No Instructor",
+                lesson.getInstructor() != null ? lesson.getInstructor().getId() : 0
         );
     }
 

@@ -7,6 +7,7 @@ import yte.intern.sms.login.entity.Users;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Academician extends Users {
 
     public Academician( String username, String password, String email, String name, String lastName) {
 
-        super( username,password, email, name, lastName, List.of(new Authority("ACADEMICIAN")));
+        super( username,password, email, name, lastName, List.of(new Authority("ACADEMICIAN")), new ArrayList<>());
     }
 
     public Academician() {

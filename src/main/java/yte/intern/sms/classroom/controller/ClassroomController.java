@@ -8,6 +8,7 @@ import yte.intern.sms.classroom.controller.requests.AddClassroomRequest;
 import yte.intern.sms.classroom.controller.responses.ClassroomQueryModel;
 import yte.intern.sms.classroom.service.ClassroomService;
 import yte.intern.sms.common.response.MessageResponse;
+import yte.intern.sms.lesson.service.LessonService;
 
 
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ import java.util.List;
 @Validated
 public class ClassroomController {
     private final ClassroomService classroomService;
+    private final LessonService lessonService;
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -47,6 +49,7 @@ public class ClassroomController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse deleteClassroomById(@PathVariable @NotNull Long id) {
+        lessonService.clearClassroomId(id);
         return classroomService.deleteClassroomById(id);
     }
 

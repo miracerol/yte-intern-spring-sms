@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
 import yte.intern.sms.common.entity.BaseEntity;
+import yte.intern.sms.lesson.entity.Lesson;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -35,6 +36,10 @@ public class Users extends BaseEntity implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private List<Authority> authorities;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "user_lessons", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
+    private List<Lesson> lessons;
 
     public void updateUser(String email, String name, String lastName) {
 
@@ -70,5 +75,13 @@ public class Users extends BaseEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    public void addLesson(Lesson lesson) {
+        lessons.add(lesson);
+    }
+    public void deleteLesson(Lesson lesson) {
+        lessons.remove(lesson);
     }
 }

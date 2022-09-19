@@ -12,6 +12,7 @@ import yte.intern.sms.academician.controller.responses.AcademicianQueryModel;
 import yte.intern.sms.academician.service.AcademicianService;
 import yte.intern.sms.common.response.MessageResponse;
 
+import yte.intern.sms.lesson.service.LessonService;
 import yte.intern.sms.login.repository.AuthorityRepository;
 import yte.intern.sms.login.repository.UserRepository;
 
@@ -25,7 +26,7 @@ import java.util.List;
 @Validated
 public class AcademicianController {
     private final AcademicianService academicianService;
-    private final UserRepository userRepository;
+    private final LessonService lessonService;
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
 
@@ -55,6 +56,7 @@ public class AcademicianController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse deleteAcademicianById(@PathVariable @NotNull Long id) {
+        lessonService.clearAcademicianId(id);
         return academicianService.deleteAcademicianById(id);
     }
 

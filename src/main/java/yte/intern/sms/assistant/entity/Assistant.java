@@ -7,6 +7,7 @@ import yte.intern.sms.login.entity.Users;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Assistant extends Users {
 
     public Assistant( String username, String password, String email, String name, String lastName) {
 
-        super( username,password, email, name, lastName, List.of(new Authority("ASSISTANT")));
+        super( username,password, email, name, lastName, List.of(new Authority("ASSISTANT")), new ArrayList<>());
     }
 
     public Assistant() {

@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 import yte.intern.sms.common.response.ResponseType;
 import yte.intern.sms.common.response.SecurityRecord;
 import yte.intern.sms.login.controller.LoginRequest;
+import yte.intern.sms.login.entity.Users;
+import yte.intern.sms.login.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
 public class LoginService {
 
     private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
     private String authority = "";
     public SecurityRecord login(LoginRequest loginRequest) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password());
@@ -27,6 +30,8 @@ public class LoginService {
         SecurityContextHolder.setContext(newContext);
 
         authority = newContext.getAuthentication().getAuthorities().stream().toList().get(0).getAuthority();
-        return new SecurityRecord(ResponseType.SUCCESS, "Login is successful",authority);
+        Users users = userRepository.findByUsername(loginRequest.username()).get();
+        Long id = users.getId();
+        return new SecurityRecord(ResponseType.SUCCESS, "Login is successful",authority, id);
     }
 }

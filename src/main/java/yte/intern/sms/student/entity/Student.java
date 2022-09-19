@@ -11,6 +11,7 @@ import yte.intern.sms.login.repository.UserRepository;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,7 +23,7 @@ public class Student extends Users {
 
     public Student( String username, String password, String email, String name, String lastName) {
 
-        super( username,password, email, name, lastName, List.of(new Authority("STUDENT")));
+        super( username,password, email, name, lastName, List.of(new Authority("STUDENT")), new ArrayList<>());
     }
 
     public Student() {
