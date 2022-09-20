@@ -8,6 +8,7 @@ import yte.intern.sms.academician.service.AcademicianService;
 import yte.intern.sms.classroom.service.ClassroomService;
 import yte.intern.sms.common.response.MessageResponse;
 import yte.intern.sms.lesson.controller.requests.AddLessonRequest;
+import yte.intern.sms.lesson.controller.responses.LessonDetailResponse;
 import yte.intern.sms.lesson.controller.responses.LessonQueryModel;
 import yte.intern.sms.lesson.service.LessonService;
 
@@ -56,6 +57,12 @@ public class LessonController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse updateLesson(@Valid @RequestBody AddLessonRequest request, @PathVariable Long id) {
         return lessonService.updateLesson(id, request.toDomainEntity(classroomService,academicianService));
+    }
+
+    @GetMapping("/detail/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    public LessonDetailResponse getLessonDetail(@PathVariable @NotNull Long id) {
+        return new LessonDetailResponse(lessonService.getById(id), lessonService);
     }
 
 }

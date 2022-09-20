@@ -8,6 +8,8 @@ import yte.intern.sms.common.response.MessageResponse;
 import yte.intern.sms.common.response.ResponseType;
 import yte.intern.sms.lesson.entity.Lesson;
 import yte.intern.sms.lesson.repository.LessonRepository;
+import yte.intern.sms.student.entity.Student;
+import yte.intern.sms.student.repository.StudentRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -19,6 +21,7 @@ public class LessonService {
 
     private final LessonRepository lessonRepository;
     private final AcademicianRepository academicianRepository;
+    private final StudentRepository studentRepository;
 
 
 
@@ -41,6 +44,9 @@ public class LessonService {
     public Lesson getById(Long id) {
         return lessonRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Lesson not found"));
+    }
+    public List<Lesson> getByClassroom(Long id) {
+        return lessonRepository.findAllByClassroomId(id);
     }
 
     public MessageResponse deleteLessonById(Long id) {
@@ -75,6 +81,9 @@ public class LessonService {
         lessonRepository.save(lesson);
 
         return new MessageResponse(ResponseType.SUCCESS, "Lesson has been updated successfully");
+    }
+    public List<Student> getStudentsByLessonId(Long id) {
+        return studentRepository.findStudentsByLessonsId(id);
     }
     public List<Lesson> findAllByClassroomId(Long id) {
         return lessonRepository.findAllByClassroomId(id);

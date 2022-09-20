@@ -10,6 +10,7 @@ import yte.intern.sms.assistant.entity.Assistant;
 import yte.intern.sms.classroom.entity.Classroom;
 import yte.intern.sms.classroom.service.ClassroomService;
 import yte.intern.sms.common.entity.BaseEntity;
+import yte.intern.sms.student.entity.Student;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -75,6 +76,9 @@ public class Lesson extends BaseEntity {
         String StartTime = "";
         String EndTime = "";
         int lastSlot = -1;
+        if (this.schedule.size() < 2) {
+            return scheduleText;
+        }
         for (String s : this.schedule){
 
             String[] split = s.split("-");
@@ -100,6 +104,8 @@ public class Lesson extends BaseEntity {
         scheduleText.add(day+" "+StartTime+"-"+EndTime);
         return scheduleText;
     }
+
+
     public String dayConverter(int day) {
         return switch (day) {
             case 1 -> "Monday";

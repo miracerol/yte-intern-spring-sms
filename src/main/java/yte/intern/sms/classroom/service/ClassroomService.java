@@ -40,6 +40,12 @@ public class ClassroomService {
     }
 
     public MessageResponse deleteClassroomById(Long id) {
+        List<Lesson> lessons = lessonService.getByClassroom(id);
+        for(Lesson lesson : lessons){
+            lesson.setClassroom(null);
+            lesson.setSchedule(new ArrayList<>());
+            lessonService.updateLesson(lesson.getId(),lesson);
+        }
         classroomRepository.deleteById(id);
         return new MessageResponse(ResponseType.SUCCESS, "Classroom has been deleted successfully");
 
