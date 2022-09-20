@@ -12,6 +12,7 @@ import yte.intern.sms.academician.controller.responses.AcademicianQueryModel;
 import yte.intern.sms.academician.service.AcademicianService;
 import yte.intern.sms.common.response.MessageResponse;
 
+import yte.intern.sms.lesson.controller.responses.LessonQueryModel;
 import yte.intern.sms.lesson.service.LessonService;
 import yte.intern.sms.login.repository.AuthorityRepository;
 import yte.intern.sms.login.repository.UserRepository;
@@ -70,5 +71,13 @@ public class AcademicianController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse updatePassword(@PathVariable Long id, @RequestBody UpdatePasswordRequest passwordRequest) {
         return academicianService.updatePassword(id, passwordEncoder.encode(passwordRequest.getPassword()));
+    }
+    @GetMapping("/lessons/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    public List<LessonQueryModel> getLessons(@PathVariable Long id) {
+        return academicianService.getLessons(id)
+                .stream()
+                .map(LessonQueryModel::new)
+                .toList();
     }
 }

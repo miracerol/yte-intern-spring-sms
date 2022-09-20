@@ -6,8 +6,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yte.intern.sms.common.response.MessageResponse;
+import yte.intern.sms.lesson.controller.responses.LessonQueryModel;
 import yte.intern.sms.login.repository.AuthorityRepository;
 import yte.intern.sms.login.repository.UserRepository;
+import yte.intern.sms.student.controller.requests.AddLessonRequestStudent;
 import yte.intern.sms.student.controller.requests.AddStudentRequest;
 import yte.intern.sms.student.controller.requests.UpdatePasswordRequest;
 import yte.intern.sms.student.controller.requests.UpdateStudentRequest;
@@ -69,16 +71,27 @@ public class StudentController {
         return studentService.updatePassword(id, passwordEncoder.encode(passwordRequest.getPassword()));
     }
 
-    @PostMapping("/add-lesson/{id}")
+    @PostMapping("/lessons/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
-    public MessageResponse addLesson(@PathVariable Long id, @RequestBody Long lessonId) {
-        return studentService.addLesson(id, lessonId);
+    public MessageResponse addLesson(@PathVariable Long id, @RequestBody AddLessonRequestStudent request) {
+        return studentService.addLesson(id, request.toDomainEntity());
     }
-    @PostMapping("/delete-lesson/{id}")
+    @PutMapping("/lessons/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
-    public MessageResponse deleteLesson(@PathVariable Long id, @RequestBody Long lessonId) {
-        return studentService.deleteLesson(id, lessonId);
+    public MessageResponse deleteLesson(@PathVariable Long id, @RequestBody AddLessonRequestStudent request) {
+        return studentService.deleteLesson(id, request.toDomainEntity());
     }
+
+    @GetMapping("/lessons/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    public List<LessonQueryModel> getLessons(@PathVariable Long id) {
+        return studentService.getLessons(id)
+                .stream()
+                .map(LessonQueryModel::new)
+                .toList();
+    }
+
+
 
     private String createUsername(){
         String username="";

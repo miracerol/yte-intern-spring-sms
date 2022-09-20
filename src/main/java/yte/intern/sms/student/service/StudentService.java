@@ -10,6 +10,7 @@ import yte.intern.sms.student.entity.Student;
 import yte.intern.sms.student.repository.StudentRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -66,6 +67,9 @@ public class StudentService {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         Lesson lesson = lessonService.getById(lessonId);
+        if (student.getLessons().contains(lesson)) {
+            return new MessageResponse(ResponseType.ERROR, "Student already has this lesson");
+        }
         student.addLesson(lesson);
         studentRepository.save(student);
         return new MessageResponse(ResponseType.SUCCESS, "Lesson has been added successfully");
@@ -78,6 +82,12 @@ public class StudentService {
         student.deleteLesson(lesson);
         studentRepository.save(student);
         return new MessageResponse(ResponseType.SUCCESS, "Lesson has been deleted successfully");
+    }
+
+    public List<Lesson> getLessons(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+        return student.getLessons();
     }
 }
 

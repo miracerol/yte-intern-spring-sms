@@ -7,11 +7,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yte.intern.sms.assistant.controller.requests.AddAssistantRequest;
+import yte.intern.sms.assistant.controller.requests.AddLessonRequestAssistant;
 import yte.intern.sms.assistant.controller.requests.UpdateAssistantRequest;
 import yte.intern.sms.assistant.controller.requests.UpdatePasswordRequest;
 import yte.intern.sms.assistant.controller.responses.AssistantQueryModel;
 import yte.intern.sms.assistant.service.AssistantService;
 import yte.intern.sms.common.response.MessageResponse;
+import yte.intern.sms.lesson.controller.responses.LessonQueryModel;
 import yte.intern.sms.login.repository.AuthorityRepository;
 import yte.intern.sms.login.repository.UserRepository;
 
@@ -70,5 +72,26 @@ public class AssistantController {
     public MessageResponse updatePassword(@PathVariable Long id, @RequestBody UpdatePasswordRequest passwordRequest) {
         return assistantService.updatePassword(id, passwordEncoder.encode(passwordRequest.getPassword()));
     }
+
+    @PostMapping("/add-lesson/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    public MessageResponse addLesson(@PathVariable Long id, @RequestBody AddLessonRequestAssistant request) {
+        return assistantService.addLesson(id, request.toDomainEntity());
+    }
+    @PostMapping("/delete-lesson/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    public MessageResponse deleteLesson(@PathVariable Long id, @RequestBody AddLessonRequestAssistant request) {
+        return assistantService.deleteLesson(id, request.toDomainEntity());
+    }
+
+    @GetMapping("/lessons/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    public List<LessonQueryModel> getLessons(@PathVariable Long id) {
+        return assistantService.getLessons(id)
+                .stream()
+                .map(LessonQueryModel::new)
+                .toList();
+    }
+
 
 }

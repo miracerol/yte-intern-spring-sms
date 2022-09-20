@@ -6,10 +6,12 @@ import yte.intern.sms.academician.entity.Academician;
 import yte.intern.sms.academician.repository.AcademicianRepository;
 import yte.intern.sms.common.response.MessageResponse;
 import yte.intern.sms.common.response.ResponseType;
+import yte.intern.sms.lesson.entity.Lesson;
 import yte.intern.sms.lesson.repository.LessonRepository;
 
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -61,5 +63,10 @@ public class AcademicianService {
         return new MessageResponse(ResponseType.SUCCESS, "Password has been updated successfully");
     }
 
+    public List<Lesson> getLessons(Long id) {
+        Academician academician = academicianRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Academician not found"));
+        return academician.getLessons();
+    }
 }
 
