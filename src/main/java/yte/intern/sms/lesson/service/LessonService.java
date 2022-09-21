@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import yte.intern.sms.academician.entity.Academician;
 import yte.intern.sms.academician.repository.AcademicianRepository;
+import yte.intern.sms.assistant.entity.Assistant;
+import yte.intern.sms.assistant.repository.AssistantRepository;
 import yte.intern.sms.common.response.MessageResponse;
 import yte.intern.sms.common.response.ResponseType;
 import yte.intern.sms.lesson.entity.Lesson;
@@ -22,6 +24,7 @@ public class LessonService {
     private final LessonRepository lessonRepository;
     private final AcademicianRepository academicianRepository;
     private final StudentRepository studentRepository;
+    private final AssistantRepository assistantRepository;
 
 
 
@@ -112,5 +115,9 @@ public class LessonService {
         }
     }
 
+    public List<Assistant> getAssistants(Lesson lesson) {
+        List<Assistant> assistants = assistantRepository.findAssistantByLessonsId(lesson.getId());
+        return assistants;
+    }
 }
 

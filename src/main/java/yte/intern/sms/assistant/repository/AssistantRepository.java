@@ -10,4 +10,6 @@ public interface AssistantRepository  extends JpaRepository<Assistant, Long> {
     Optional<Assistant> findAssistantById(Long id);
 
     List<Assistant> findAll();
+
+    List<Assistant> findAssistantByLessonsId(Long lessonId);
 }

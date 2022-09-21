@@ -73,13 +73,13 @@ public class AssistantController {
         return assistantService.updatePassword(id, passwordEncoder.encode(passwordRequest.getPassword()));
     }
 
-    @PostMapping("/add-lesson/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    @PostMapping("/lessons/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN')")
     public MessageResponse addLesson(@PathVariable Long id, @RequestBody AddLessonRequestAssistant request) {
         return assistantService.addLesson(id, request.toDomainEntity());
     }
-    @PostMapping("/delete-lesson/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    @PutMapping("/lessons/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN')")
     public MessageResponse deleteLesson(@PathVariable Long id, @RequestBody AddLessonRequestAssistant request) {
         return assistantService.deleteLesson(id, request.toDomainEntity());
     }

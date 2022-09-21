@@ -1,6 +1,7 @@
 package yte.intern.sms.lesson.controller.responses;
 
 import yte.intern.sms.assistant.entity.Assistant;
+import yte.intern.sms.lesson.entity.Lesson;
 
 import java.util.List;
 

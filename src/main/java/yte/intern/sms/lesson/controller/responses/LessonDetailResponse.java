@@ -36,10 +36,10 @@ public record LessonDetailResponse(
                 lesson.getClassroom() != null ? lesson.getClassroom().getId() : 0,
                 lesson.getInstructor() != null ? (lesson.getInstructor().getName() + " " + lesson.getInstructor().getLastName()) : "No Instructor",
                 lesson.getInstructor() != null ? lesson.getInstructor().getId() : 0,
-                LessonAssistantResponse.toLessonAssistantResponseList(lesson.getAssistants()),
+                LessonAssistantResponse.toLessonAssistantResponseList(lessonService.getAssistants(lesson)),
                 LessonStudentResponse.toLessonStudentResponseList(lessonService.getStudentsByLessonId(lesson.getId())),
                 lessonService.getStudentsByLessonId(lesson.getId()).size(),
-                lesson.getAssistants().size()
+                lessonService.getAssistants(lesson).size()
         );
     }
 }

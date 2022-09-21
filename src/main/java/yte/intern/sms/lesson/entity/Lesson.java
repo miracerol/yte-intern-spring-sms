@@ -53,11 +53,6 @@ public class Lesson extends BaseEntity {
     @JoinColumn(name = "academician_id")
     private Academician instructor;
 
-    @ManyToMany
-    @JoinTable(name = "lesson_assistant",
-            joinColumns = @JoinColumn(name = "lesson_id"),
-            inverseJoinColumns = @JoinColumn(name = "assistant_id"))
-    private List<Assistant> assistants;
 
 
     public void update(Lesson updatedLesson) {
