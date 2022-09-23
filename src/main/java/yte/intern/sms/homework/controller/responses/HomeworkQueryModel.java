@@ -5,18 +5,15 @@ import org.springframework.core.io.Resource;
 import java.util.List;
 
 public record HomeworkQueryModel(
-        String title,
+
         String description,
-        String deadline,
         String studentName,
         long studentId,
-        List<Byte[]> files,
+        List<byte[]> files,
         Integer grade
 ) {
-    public HomeworkQueryModel(String title, String description, String deadline, String studentName, long studentId, List<Byte[]> files, Integer grade) {
-        this.title = title;
+    public HomeworkQueryModel( String description, String studentName, long studentId, List<byte[]> files, Integer grade) {
         this.description = description;
-        this.deadline = deadline;
         this.studentName = studentName;
         this.studentId = studentId;
         this.files = files;

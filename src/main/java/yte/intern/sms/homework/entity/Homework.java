@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import yte.intern.sms.common.entity.BaseEntity;
+import yte.intern.sms.homeworkPost.entity.HomeworkPost;
 import yte.intern.sms.lesson.entity.Lesson;
 import yte.intern.sms.student.entity.Student;
 
@@ -23,12 +24,16 @@ import static java.util.Collections.emptyList;
 @AllArgsConstructor
 public class Homework extends BaseEntity {
 
-    private String title;
+
     private String description;
-    private String deadline;
+
 
     @Convert(converter = StringListConverter.class)
     private List<String> filePaths;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "homework_post_id")
+    private HomeworkPost homeworkPost;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id")

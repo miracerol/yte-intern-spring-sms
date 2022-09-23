@@ -53,18 +53,11 @@ public class HomeworkService {
         return fileNames;
     }
 
-    public List<Byte[]> getFiles(List<String> fileNames) {
-        List<Byte[]> files = new ArrayList<>();
+    public List<byte[]> getFiles(List<String> fileNames) {
+        List<byte[]> files = new ArrayList<>();
         fileNames.stream().forEach(fileName -> {
             try {
-                File file = new File(path + "/" + fileName);
-                byte[] bytes = Files.readAllBytes(file.toPath());
-                Byte[] bytes1 = new Byte[bytes.length];
-                int i = 0;
-                for (byte b : bytes) {
-                    bytes1[i++] = b;
-                }
-                files.add(bytes1);
+                files.add(Files.readAllBytes(new File(path + "/" + fileName).toPath()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
