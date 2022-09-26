@@ -76,6 +76,10 @@ public class HomeworkService {
     public List<Homework> getHomeworksByLessonId(long lessonId) {
         return homeworkRepository.findAllByLessonId(lessonId);
     }
+
+    public List<Homework> getAllHomeworks() {
+        return homeworkRepository.findAll();
+    }
     public List<Homework> getHomeworksByStudentId(long studentId) {
         return homeworkRepository.findAllByLessonId(studentId);
     }
@@ -84,4 +88,14 @@ public class HomeworkService {
         return homeworkRepository.findByLessonIdAndStudentId(lessonId, studentId);
     }
 
+    public Homework getHomeworkByStudentIdAndHomeworkPostId(long studentId, long homeworkPostId) {
+        return homeworkRepository.findByStudentIdAndHomeworkPostId(studentId, homeworkPostId);
+    }
+
+    public MessageResponse gradeHomework(long homeworkId, int grade) {
+        Homework homework = homeworkRepository.findById(homeworkId).get();
+        homework.setGrade(grade);
+        homeworkRepository.save(homework);
+        return new MessageResponse(ResponseType.SUCCESS, "Homework has been graded successfully");
+    }
 }

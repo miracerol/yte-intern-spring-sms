@@ -20,5 +20,7 @@ public interface HomeworkRepository extends JpaRepository<Homework, Long> {
 
     Homework findByLessonIdAndStudentId(Long lessonId, Long studentId);
 
+    Homework findByStudentIdAndHomeworkPostId(Long studentId, Long homeworkPostId);
+
 
 }

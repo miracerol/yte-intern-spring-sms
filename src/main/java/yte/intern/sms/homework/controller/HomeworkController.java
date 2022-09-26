@@ -29,7 +29,7 @@ public class HomeworkController {
     private final HomeworkPostService homeworkPostService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
     public MessageResponse addHomework(@RequestParam("files") MultipartFile[] files, @Valid @ModelAttribute AddHomeworkRequest addHomeworkRequest) {
 
         return homeworkService.addHomework(addHomeworkRequest.toDomainEntity(files,homeworkService,lessonService,studentService, homeworkPostService));
@@ -41,12 +41,31 @@ public class HomeworkController {
         return homeworkService.getHomeworksByLessonId(lessonId)
                 .stream()
                 .map(homework -> new HomeworkQueryModel(
+                        homework.getId(),
                         homework.getDescription(),
                         homework.getStudent().getName()+" "+homework.getStudent().getLastName(),
                         homework.getStudent().getId(),
-                        homeworkService.getFiles(homework.getFilePaths()),
+                        homework.getHomeworkPost().getId(),
+                        homework.getFilePaths(),
                         homework.getGrade()
                         ))
+                .toList();
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    public List<HomeworkQueryModel> getHomeworks() {
+        return homeworkService.getAllHomeworks()
+                .stream()
+                .map(homework -> new HomeworkQueryModel(
+                        homework.getId(),
+                        homework.getDescription(),
+                        homework.getStudent().getName()+" "+homework.getStudent().getLastName(),
+                        homework.getStudent().getId(),
+                        homework.getHomeworkPost().getId(),
+                        homework.getFilePaths(),
+                        homework.getGrade()
+                ))
                 .toList();
     }
 
@@ -55,21 +74,30 @@ public class HomeworkController {
     public HomeworkQueryModel getHomeworkByLessonIdAndStudentId(@PathVariable long lessonId, @PathVariable long studentId) {
         Homework homework = homeworkService.getHomeworkByLessonIdAndStudentId(lessonId,studentId);
         return new HomeworkQueryModel(
+                homework.getId(),
                 homework.getDescription(),
                 homework.getStudent().getName()+" "+homework.getStudent().getLastName(),
                 homework.getStudent().getId(),
-                homeworkService.getFiles(homework.getFilePaths()),
+                homework.getHomeworkPost().getId(),
+                homework.getFilePaths(),
                 homework.getGrade()
         );
     }
 
 
-    @GetMapping(value = "/{lessonId}/{studentId}/{fileIndex}")
+    @GetMapping(value = "/{homeworkPostId}/{studentId}/{fileIndex}")
     @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
-    public byte[] getFile(@PathVariable long lessonId, @PathVariable long studentId, @PathVariable int fileIndex) {
-        Homework homework = homeworkService.getHomeworkByLessonIdAndStudentId(lessonId,studentId);
+    public byte[] getFile(@PathVariable long homeworkPostId, @PathVariable long studentId, @PathVariable int fileIndex) {
+        Homework homework = homeworkService.getHomeworkByStudentIdAndHomeworkPostId(studentId,homeworkPostId);
         return homeworkService.getFiles(homework.getFilePaths()).get(fileIndex);
     }
+
+    @PutMapping("/{homeworkId}/grade")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT')")
+    public MessageResponse gradeHomework(@PathVariable long homeworkId, @RequestParam int grade) {
+        return homeworkService.gradeHomework(homeworkId,grade);
+    }
+
 
 
 
