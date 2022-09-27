@@ -27,6 +27,12 @@ public class HomeworkPostController {
     public MessageResponse addHomeworkPost(@Valid @RequestBody AddHomeworkPostRequest addHomeworkPostRequest) {
         return homeworkPostService.addHomeworkPost(addHomeworkPostRequest.toDomainEntity(lessonService));
     }
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN')")
+    public MessageResponse updateHomeworkPost(@Valid @RequestBody AddHomeworkPostRequest request, @PathVariable Long id) {
+        return homeworkPostService.updateHomeworkPost(id, request.toDomainEntity(lessonService));
+    }
+
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")

@@ -21,8 +21,8 @@ public record AddLessonRequest(
         String type,
         String code,
         List<String> schedule,
-        Long classroomId,
-        Long academicianId
+        long classroomId,
+        long academicianId
 
 ) {
     public Lesson toDomainEntity(ClassroomService classroomService, AcademicianService academicianService) {

@@ -6,6 +6,6 @@ import yte.intern.sms.homeworkPost.entity.HomeworkPost;
 import java.util.List;
 
 public interface HomeworkPostRepository extends JpaRepository<HomeworkPost, Long> {
-    List<HomeworkPost> findAllByLessonId(Long lessonId);
+    List<HomeworkPost> findAllByLessonIdOrderByDeadline(Long lessonId);
 }
 

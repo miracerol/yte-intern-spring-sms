@@ -23,4 +23,11 @@ public class HomeworkPost extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Lesson lesson;
+
+    public void update(HomeworkPost updatedHomeworkPost) {
+        this.title = updatedHomeworkPost.title;
+        this.description = updatedHomeworkPost.description;
+        this.deadline = updatedHomeworkPost.deadline;
+    }
 }
+

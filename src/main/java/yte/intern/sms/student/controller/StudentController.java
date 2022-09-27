@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yte.intern.sms.common.response.MessageResponse;
+import yte.intern.sms.homework.service.HomeworkService;
 import yte.intern.sms.lesson.controller.responses.LessonQueryModel;
 import yte.intern.sms.login.repository.AuthorityRepository;
 import yte.intern.sms.login.repository.UserRepository;
@@ -13,6 +14,7 @@ import yte.intern.sms.student.controller.requests.AddLessonRequestStudent;
 import yte.intern.sms.student.controller.requests.AddStudentRequest;
 import yte.intern.sms.student.controller.requests.UpdatePasswordRequest;
 import yte.intern.sms.student.controller.requests.UpdateStudentRequest;
+import yte.intern.sms.student.controller.responses.GradesQueryModel;
 import yte.intern.sms.student.controller.responses.StudentQueryModel;
 import yte.intern.sms.student.service.StudentService;
 
@@ -26,6 +28,7 @@ import java.util.List;
 @Validated
 public class StudentController {
     private final StudentService studentService;
+    private final HomeworkService homeworkService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
@@ -91,6 +94,14 @@ public class StudentController {
                 .toList();
     }
 
+    @GetMapping("/grades/{id}")
+    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    public List<GradesQueryModel> getGrades(@PathVariable Long id) {
+        return homeworkService.getHomeworksByStudentId(id)
+                .stream()
+                .map(GradesQueryModel::new)
+                .toList();
+    }
 
 
     private String createUsername(){

@@ -20,6 +20,13 @@ public class HomeworkPostService {
         return new MessageResponse(ResponseType.SUCCESS, "Homework has been added successfully");
     }
 
+    public MessageResponse updateHomeworkPost(long id,HomeworkPost updatedHomeworkPost) {
+        HomeworkPost homeworkPost = homeworkPostRepository.findById(id).get();
+        homeworkPost.update(updatedHomeworkPost);
+        homeworkPostRepository.save(homeworkPost);
+        return new MessageResponse(ResponseType.SUCCESS, "Homework has been updated successfully");
+    }
+
     public HomeworkPost getHomeworkPostById(Long id) {
         return homeworkPostRepository.findById(id).get();
     }
@@ -29,7 +36,7 @@ public class HomeworkPostService {
     }
 
     public List<HomeworkPost> getHomeworkPostsByLessonId(Long lessonId) {
-        return homeworkPostRepository.findAllByLessonId(lessonId);
+        return homeworkPostRepository.findAllByLessonIdOrderByDeadline(lessonId);
     }
 
 

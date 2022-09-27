@@ -67,6 +67,10 @@ public class LessonService {
         Lesson lesson = lessonRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Lesson not found"));
 
+
+        lesson.update(updatedLesson);
+
+        lessonRepository.save(lesson);
         if (!Objects.equals(lesson.getInstructor().getId(), updatedLesson.getInstructor().getId())) {
             Academician academician = lesson.getInstructor();
             List<Lesson> lessons = academician.getLessons();
@@ -79,10 +83,6 @@ public class LessonService {
             updatedAcademician.setLessons(updatedLessons);
             academicianRepository.save(updatedAcademician);
         }
-        lesson.update(updatedLesson);
-
-        lessonRepository.save(lesson);
-
         return new MessageResponse(ResponseType.SUCCESS, "Lesson has been updated successfully");
     }
     public List<Student> getStudentsByLessonId(Long id) {
