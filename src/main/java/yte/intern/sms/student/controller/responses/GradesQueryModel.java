@@ -1,5 +1,6 @@
 package yte.intern.sms.student.controller.responses;
 
+import yte.intern.sms.exam.entity.Exam;
 import yte.intern.sms.homework.entity.Homework;
 
 public record GradesQueryModel(
@@ -14,4 +15,11 @@ public record GradesQueryModel(
         );
     }
 
+    public GradesQueryModel(Exam exam) {
+        this(
+                exam.getExamPost().getTitle(),
+                exam.getLesson().getLessonName(),
+                exam.getGrade()
+        );
+    }
 }

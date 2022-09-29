@@ -89,5 +89,9 @@ public class StudentService {
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         return student.getLessons();
     }
+
+    public List<Student> getStudentsByLessonId(Long id) {
+        return lessonService.getStudentsByLessonId(id);
+    }
 }
 

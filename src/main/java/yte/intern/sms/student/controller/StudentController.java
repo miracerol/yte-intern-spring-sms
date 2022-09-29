@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yte.intern.sms.common.response.MessageResponse;
+import yte.intern.sms.exam.service.ExamService;
 import yte.intern.sms.homework.service.HomeworkService;
 import yte.intern.sms.lesson.controller.responses.LessonQueryModel;
 import yte.intern.sms.login.repository.AuthorityRepository;
@@ -29,6 +30,7 @@ import java.util.List;
 public class StudentController {
     private final StudentService studentService;
     private final HomeworkService homeworkService;
+    private final ExamService examService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
@@ -94,12 +96,30 @@ public class StudentController {
                 .toList();
     }
 
-    @GetMapping("/grades/{id}")
+    @GetMapping("/grades-h/{id}")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
     public List<GradesQueryModel> getGrades(@PathVariable Long id) {
         return homeworkService.getHomeworksByStudentId(id)
                 .stream()
                 .map(GradesQueryModel::new)
+                .toList();
+    }
+
+    @GetMapping("/grades-e/{id}")
+    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    public List<GradesQueryModel> getGradesExam(@PathVariable Long id) {
+        return examService.getAllExamsByStudentId(id)
+                .stream()
+                .map(GradesQueryModel::new)
+                .toList();
+    }
+
+    @GetMapping("/lesson/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN','ASSISTANT','STUDENT')")
+    public List<StudentQueryModel> getStudentsByLessonId(@PathVariable Long id) {
+        return studentService.getStudentsByLessonId(id)
+                .stream()
+                .map(StudentQueryModel::new)
                 .toList();
     }
 

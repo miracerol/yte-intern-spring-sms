@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import yte.intern.sms.common.response.MessageResponse;
 import yte.intern.sms.homeworkPost.controller.requests.AddHomeworkPostRequest;
 import yte.intern.sms.homeworkPost.controller.responses.HomeworkPostQueryModel;
-import yte.intern.sms.homeworkPost.entity.HomeworkPost;
 import yte.intern.sms.homeworkPost.service.HomeworkPostService;
 import yte.intern.sms.lesson.service.LessonService;
 
@@ -23,7 +22,7 @@ public class HomeworkPostController {
     private final LessonService lessonService;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','ACADEMICIAN')")
     public MessageResponse addHomeworkPost(@Valid @RequestBody AddHomeworkPostRequest addHomeworkPostRequest) {
         return homeworkPostService.addHomeworkPost(addHomeworkPostRequest.toDomainEntity(lessonService));
     }
