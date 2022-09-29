@@ -1,5 +1,7 @@
 package yte.intern.sms.lesson.controller.responses;
 
+import yte.intern.sms.homework.service.HomeworkService;
+import yte.intern.sms.homeworkPost.service.HomeworkPostService;
 import yte.intern.sms.lesson.entity.Lesson;
 import yte.intern.sms.lesson.service.LessonService;
 
@@ -20,10 +22,13 @@ public record LessonDetailResponse(
         List<LessonAssistantResponse> assistants,
         List<LessonStudentResponse> students,
         int studentCount,
-        int assistantCount
+        int assistantCount,
+        int homeworkCount,
+        int examCount
+
 
 ) {
-    public LessonDetailResponse(Lesson lesson, LessonService lessonService) {
+    public LessonDetailResponse(Lesson lesson, LessonService lessonService, HomeworkPostService homeworkPostService) {
         this(
                 lesson.getId(),
                 lesson.getLessonName(),
@@ -39,7 +44,9 @@ public record LessonDetailResponse(
                 LessonAssistantResponse.toLessonAssistantResponseList(lessonService.getAssistants(lesson)),
                 LessonStudentResponse.toLessonStudentResponseList(lessonService.getStudentsByLessonId(lesson.getId())),
                 lessonService.getStudentsByLessonId(lesson.getId()).size(),
-                lessonService.getAssistants(lesson).size()
+                lessonService.getAssistants(lesson).size(),
+                homeworkPostService.getHomeworkPostsByLessonId(lesson.getId()).size(),
+                0
         );
     }
 }

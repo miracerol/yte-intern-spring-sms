@@ -81,7 +81,8 @@ public class HomeworkService {
         return homeworkRepository.findAll();
     }
     public List<Homework> getHomeworksByStudentId(long studentId) {
-        return homeworkRepository.findAllByLessonId(studentId);
+        List<Homework> homeworkList = homeworkRepository.findAllByStudentId(studentId);
+        return homeworkList;
     }
 
     public Homework getHomeworkByLessonIdAndStudentId(long lessonId, long studentId) {
