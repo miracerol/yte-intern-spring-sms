@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import yte.intern.sms.academician.service.AcademicianService;
 import yte.intern.sms.classroom.service.ClassroomService;
 import yte.intern.sms.common.response.MessageResponse;
-import yte.intern.sms.homework.service.HomeworkService;
 import yte.intern.sms.homeworkPost.service.HomeworkPostService;
 import yte.intern.sms.lesson.controller.requests.AddLessonRequest;
 import yte.intern.sms.lesson.controller.responses.LessonDetailResponse;
@@ -39,7 +38,7 @@ public class LessonController {
     public List<LessonQueryModel> getAllStudents() {
         return lessonService.getAllLessons()
                 .stream()
-                .map(lesson -> new LessonQueryModel(lesson))
+                .map(LessonQueryModel::new)
                 .toList();
     }
 

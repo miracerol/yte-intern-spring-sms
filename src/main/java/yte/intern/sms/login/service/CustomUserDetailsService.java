@@ -4,30 +4,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import yte.intern.sms.login.entity.Authority;
-import yte.intern.sms.login.entity.Users;
 import yte.intern.sms.login.repository.UserRepository;
-import yte.intern.sms.student.entity.Student;
-import yte.intern.sms.student.service.StudentService;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final StudentService studentService;
 
     @PostConstruct
     public void init() {
-        //userRepository.save(new Users("user", passwordEncoder.encode("user"),"user@gmail.com","nameuser","lastuser", List.of(new Authority("USER"))));
-        //studentService.addStudent(new Student("student",passwordEncoder.encode("student"),"student@gmail.com","student","studentlast"));
-        //userRepository.save(new Users("admin", passwordEncoder.encode("admin"),"admin@gmail.com","nameadmin","lastadmin", List.of(new Authority("ADMIN"))));
+        //academicianService.addAcademician(new Academician("academician", passwordEncoder.encode("academician"),"academician@gmail.com","academician","academician"));
+        //assistantService.addAssistant(new Assistant("assistant", passwordEncoder.encode("assistant"),"assistant@gmail.com","assistant","assistant"));
+        //studentService.addStudent(new Student("student",passwordEncoder.encode("student"),"student@gmail.com","student","student"));
+        //userRepository.save(new Users("admin", passwordEncoder.encode("admin"),"admin@gmail.com","admin","admin", List.of(new Authority("ADMIN"))));
     }
 
     @Override

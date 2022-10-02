@@ -7,16 +7,13 @@ import yte.intern.sms.classroom.service.ClassroomService;
 import yte.intern.sms.lesson.entity.Lesson;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Collections;
 import java.util.List;
 
 public record AddLessonRequest(
 
         @NotBlank
-        @Size(max = 25)
         String lessonName,
-
         String description,
         String type,
         String code,
